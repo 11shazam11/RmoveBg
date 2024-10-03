@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="ucon">
+      <div class="wrapper">
+        <h1>Welcome <%=username %></h1>
+        <h1>Start uploading</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="data" />
+          <button type="submit">Upload</button>
+        </form>
+        <h1>OR</h1>
+        <h2>Try remove bacground API</h2>
+        <form action="/remove" method="post">
+           <div class="input-box">
+            <input type="text" placeholder="Enter Url" name="externalUrl" required />
+            <button type="submit">Upload</button>
+           </div>
+        </div>
+        </form>
+      </div>
+      <div class="wrapper" style="width: auto">
+        <div class="cbox">
+          <% if (filePath) { %> <% if (filePath.endsWith('.mp4') ||
+          filePath.endsWith('.webm')) { %>
+          <h2>Video Preview:</h2>
+          <video width="320" height="240" controls>
+            <source src="<%= filePath %>" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <% } else if (filePath.endsWith('.mp3') || filePath.endsWith('.wav'))
+          { %>
+          <h2>Audio Preview:</h2>
+          <audio controls>
+            <source src="<%= filePath %>" type="audio/mpeg" />
+            Your browser does not support the audio tag.
+          </audio>
+          <% } else if (filePath.endsWith('.pdf')) { %>
+          <h2>PDF Preview:</h2>
+          <iframe src="<%= filePath %>" width="600" height="400"></iframe>
+          <% } else { %>
+          <h2>Image Preview:</h2>
+          <img
+            src="<%= filePath %>"
+            alt="Uploaded Image"
+            width="320"
+            height="240"
+          />
+          <% if(ex) { %>
+            <button><a href="/upscale?data=<%=filePath%>">Remove BG</a></button>
+          <%}%>
+          
+          <% } %> <% } %>
+        </div>
+      </div>
+    </div>
+    <script src="/script.js"></script>
+  </body>
+</html>
